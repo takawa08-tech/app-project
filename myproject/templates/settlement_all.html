@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>全ユーザー精算確認（月別）</h2>
+
+<!-- 🔽 月選択フォーム -->
+<form method="get" action="/settlement_all" style="margin-bottom: 1em;">
+  <label for="month">年月を選択：</label>
+  <input type="month" id="month" name="month" value="{{ selected_month }}">
+  <input type="submit" value="表示">
+</form>
+
+<!-- 🔽 精算結果テーブル -->
+<div style="overflow-x: auto;">
+  <table border="1" style="min-width: 700px; width: 100%;">
+    <tr>
+      <th>月</th>
+      <th>ユーザーID</th>  <!-- 追加 -->
+      <th>名前</th>
+      <th>乗車料金</th>
+      <th>運転支給</th>
+      <th>最終精算</th>
+      <th>区分</th>
+    </tr>
+    {% for s in settlements %}
+    <tr>
+      <td>{{ s.month }}</td>
+      <td>{{ s.userid }}</td>  <!-- 追加 -->
+      <td>{{ s.name }}</td>
+      <td>{{ s.ride_total }}円</td>
+      <td>{{ s.drive_reward }}円</td>
+      <td>{{ s.final_amount }}円</td>
+      <td>{{ s.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<!-- 🔽 メイン画面に戻るボタン -->
+<div style="margin-top: 2em;">
+  <a href="/" class="btn">🏠 メイン画面に戻る</a>
+</div>
+{% endblock %}
